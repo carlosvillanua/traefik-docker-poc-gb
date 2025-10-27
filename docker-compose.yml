@@ -1,0 +1,42 @@
+services:
+  traefik-hub:
+    image: ghcr.io/traefik/traefik-hub:v3.18.0
+    container_name: traefik-hub
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./data:/data
+      - ./config:/config:ro
+    command:
+      # API Configuration
+      - --api.dashboard=true
+      - --api.insecure=true
+      # Entry Points
+      - --entrypoints.web.address=:80
+      - --entrypoints.websecure.address=:443
+      # Providers
+      - --providers.file.directory=/config
+      - --providers.file.watch=true
+      # Logging
+      - --log.level=DEBUG
+      - --accesslog=true
+      # Hub Configuration
+      - --hub.token=${TRAEFIK_HUB_TOKEN}
+      - --hub.offline=true
+    networks:
+      - traefik
+
+  httpbin:
+    image: kennethreitz/httpbin
+    container_name: httpbin
+    restart: unless-stopped
+    networks:
+      - traefik
+
+networks:
+  traefik:
+    external: true

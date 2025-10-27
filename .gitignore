@@ -1,0 +1,31 @@
+# Environment variables (contains sensitive tokens and credentials)
+.env
+
+# ACME certificates and account data
+data/
+
+# Generated dynamic configuration (created from template)
+config/dynamic.yml
+
+# Docker volumes and logs
+*.log
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.temp

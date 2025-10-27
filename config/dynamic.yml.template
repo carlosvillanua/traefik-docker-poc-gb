@@ -1,0 +1,40 @@
+http:
+  routers:
+    httpbin:
+      rule: "Host(`${DOMAIN}`)"
+      entryPoints:
+        - web
+      service: httpbin
+      middlewares:
+        - jwt-auth
+        - waf
+
+  middlewares:
+    jwt-auth:
+      plugin:
+        jwt:
+          jwksUrl: "${JWKS_URL}"
+          forwardHeaders:
+            Group: "group"
+            Email: "email"
+    
+    waf:
+      plugin:
+        coraza:
+          crsEnabled: true
+          directives:
+            - SecRuleEngine On
+            - SecRule REQUEST_URI "@streq /anything/admin" "id:101,phase:1,t:lowercase,log,deny"
+            - SecRule REQUEST_METHOD "@streq GET" "id:201,phase:1,log,deny,status:403,msg:'Blocked GET containing /admin',chain"
+            - SecRule REQUEST_URI "@rx /admin"
+            - Include @owasp_crs/REQUEST-911-METHOD-ENFORCEMENT.conf
+            - Include @owasp_crs/REQUEST-932-APPLICATION-ATTACK-RCE.conf
+            - Include @owasp_crs/REQUEST-933-APPLICATION-ATTACK-PHP.conf
+            - Include @owasp_crs/REQUEST-942-APPLICATION-ATTACK-SQLI.conf
+    
+
+  services:
+    httpbin:
+      loadBalancer:
+        servers:
+          - url: "http://httpbin:80"
