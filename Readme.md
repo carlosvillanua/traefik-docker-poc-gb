@@ -47,27 +47,27 @@ The `config/dynamic.yml` file contains:
 Access the httpbin service with JWT authentication:
 
 ```bash
-# Make authenticated request to main service (replace JWT_TOKEN)
+# Make authenticated request to main service (replace YOUR_DOMAIN and JWT_TOKEN)
 curl -H "Authorization: Bearer JWT_TOKEN" \
-     http://httpbin.traefik.localhost/get
+     http://YOUR_DOMAIN/get
 ```
 
 ### Without Authentication (will return 401)
 ```bash
 # This will fail with 401 Unauthorized
-curl http://httpbin.traefik.localhost/get
+curl http://YOUR_DOMAIN/get
 ```
 
 ### WAF Testing
 ```bash
 # This will be blocked by WAF (403 Forbidden)
-curl http://httpbin.traefik.localhost/anything/admin
+curl http://YOUR_DOMAIN/anything/admin
 
 # Test other WAF rules
-curl http://httpbin.traefik.localhost/admin
+curl http://YOUR_DOMAIN/admin
 
 # Normal request should work (but will return 401 due to JWT)
-curl http://httpbin.traefik.localhost/get
+curl http://YOUR_DOMAIN/get
 ```
 
 **Note**: All routes use HTTP via the `web` entrypoint (port 80).

@@ -1,7 +1,7 @@
 services:
   traefik-hub:
     image: ghcr.io/traefik/traefik-hub:v3.18.0
-    container_name: traefik-hub
+    container_name: traefik-docker-poc
     restart: unless-stopped
     ports:
       - "80:80"
