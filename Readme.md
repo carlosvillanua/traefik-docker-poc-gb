@@ -5,7 +5,7 @@ A complete Traefik Hub configuration with JWT authentication and WAF protection.
 ## Features
 
 - 🔐 **JWT Authentication** with Keycloak integration
-- 🛡️ **WAF Protection** with Coraza plugin
+- 🛡️ **WAF Protection** with Coraza plugin ([Documentation](https://coraza.io/docs/tutorials/introduction/))
 - 🌐 **HTTP Access** on port 80
 - 📁 **File Provider** for dynamic configuration
 
@@ -17,7 +17,7 @@ The `config/dynamic.yml` file contains:
   - `httpbin` - Main service route with JWT auth and WAF protection
 - **Middlewares**:
   - `jwt-auth` - JWT validation using Keycloak JWKS
-  - `waf` - Web Application Firewall with OWASP Core Rule Set
+  - `waf` - Web Application Firewall with OWASP Core Rule Set ([Coraza Documentation](https://coraza.io/docs/tutorials/introduction/))
 - **Services**: Load balancer configuration for httpbin container
 
 ## Quick Start
