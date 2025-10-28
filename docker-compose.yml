@@ -24,9 +24,21 @@ services:
       # Logging
       - --log.level=DEBUG
       - --accesslog=true
+      - --accesslog.format=json
       # Hub Configuration
       - --hub.token=${TRAEFIK_HUB_TOKEN}
       - --hub.offline=true
+      # Observability - Metrics (uncomment to enable)
+      # - --metrics.otlp=true
+      # - --metrics.otlp.http.endpoint=${METRICS_ENDPOINT:-http://otel-collector:4318/v1/metrics}
+      # Observability - Tracing (uncomment to enable)
+      # - --tracing.otlp=true
+      # - --tracing.otlp.http.endpoint=${TRACES_ENDPOINT:-http://otel-collector:4318/v1/traces}
+      # Observability - Logs (uncomment to enable)
+      # - --experimental.otlpLogs=true
+      # - --log.otlp.http.endpoint=${LOGS_ENDPOINT:-http://otel-collector:4318/v1/logs}
+      # - --accesslog.otlp=true
+      # - --accesslog.otlp.http.endpoint=${LOGS_ENDPOINT:-http://otel-collector:4318/v1/logs}
     networks:
       - traefik
 

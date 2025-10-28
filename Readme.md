@@ -77,3 +77,16 @@ curl http://YOUR_DOMAIN/get
 - **Dashboard**: http://localhost:8080
 - **API**: http://localhost:8080/api
 - **Logs**: `docker logs traefik-hub`
+
+### Observability (Optional)
+
+Observability exports (metrics, traces, logs) are available but commented out in `docker-compose.yml`. To enable:
+
+1. Uncomment the observability configuration lines in the Traefik service
+2. Set up your observability backend (OpenTelemetry Collector, Prometheus, Jaeger, etc.)
+3. Configure endpoints in `.env` file:
+   ```bash
+   METRICS_ENDPOINT=http://your-collector:4318/v1/metrics
+   TRACES_ENDPOINT=http://your-collector:4318/v1/traces
+   LOGS_ENDPOINT=http://your-collector:4318/v1/logs
+   ```
